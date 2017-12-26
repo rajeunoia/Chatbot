@@ -5,7 +5,12 @@ import datetime
 import json
 
 chatbot = ChatBot("doc")
-
+vaccine_details_intro = [
+    "Hi Hello How are you?",
+    "Hi, you can ask questions about yuor child health",
+    "help what can i ask ? ",
+    "What are my child vaccines at 6 weeks ? or when is next vaccines after 6 weeks ? "
+]
 vaccine_details = [
     "what are the vaccines at Birth ?",
     '{"0":{"vaccine_name":"BCG","total_number_of_doses":1,"dose_number":1,"number_of_days":0},"1":{"vaccine_name":"OPV","total_number_of_doses":4,"dose_number":1,"number_of_days":0},"2":{"vaccine_name":"Hep-B","total_number_of_doses":3,"dose_number":1,"number_of_days":0}}',
@@ -54,7 +59,7 @@ vaccine_details = [
 ]
 
 chatbot.set_trainer(ListTrainer)
-chatbot.train(vaccine_details)
+chatbot.train(vaccine_details_intro + vaccine_details)
 msg = ""
 inp = ""
 conv = []
@@ -111,7 +116,9 @@ while mode == "train" or mode == "talk":
             msg = input("You: ")
             if msg.find('month') != -1 and msg.find('week') != -1 and msg.find('year') != -1 and msg.find('day') != -1:
                 if contex_data["child_age"] != None:
-                    msg = msg + contex_data["child_age"]
+                    pass
+                    #Below will add age to the question as per the vaccine schedule 
+                    #msg = msg + set_vaccine_age()
                 elif input("Do you want to share your child details ?(yes or no) ") == "yes":
                     child_details = child_register()
                     print(child_details)
